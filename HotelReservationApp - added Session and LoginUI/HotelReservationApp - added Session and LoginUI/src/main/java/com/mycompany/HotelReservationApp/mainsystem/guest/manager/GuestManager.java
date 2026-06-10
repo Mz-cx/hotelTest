@@ -24,18 +24,18 @@ public class GuestManager {
     }
     
     public boolean addGuest(Guest guest) {
-        if (guest == null || guest.getGuestID() == null || guest.getGuestID().isEmpty()) {
+        if (guest == null || guest.getUserID() == null || guest.getUserID().isEmpty()) {
             Logger.getInstance().warn("Cannot add null or invalid guest");
             return false;
         }
         
-        if (guests.containsKey(guest.getGuestID())) {
-            Logger.getInstance().warn("Guest already exists: " + guest.getGuestID());
+        if (guests.containsKey(guest.getUserID())) {
+            Logger.getInstance().warn("Guest already exists: " + guest.getUserID());
             return false;
         }
         
-        guests.put(guest.getGuestID(), guest);
-        Logger.getInstance().info("Guest added: " + guest.getGuestID());
+        guests.put(guest.getUserID(), guest);
+        Logger.getInstance().info("Guest added: " + guest.getUserID());
         return true;
     }
     
@@ -44,13 +44,13 @@ public class GuestManager {
     }
     
     public boolean updateGuest(Guest guest) {
-        if (guest == null || !guests.containsKey(guest.getGuestID())) {
+        if (guest == null || !guests.containsKey(guest.getUserID())) {
             Logger.getInstance().warn("Cannot update non-existent guest");
             return false;
         }
         
-        guests.put(guest.getGuestID(), guest);
-        Logger.getInstance().info("Guest updated: " + guest.getGuestID());
+        guests.put(guest.getUserID(), guest);
+        Logger.getInstance().info("Guest updated: " + guest.getUserID());
         return true;
     }
     

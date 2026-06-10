@@ -1,12 +1,13 @@
 package com.mycompany.HotelReservationApp.mainsystem;
 
 import com.mycompany.HotelReservationApp.mainsystem.hotelreservation.session.SessionManager;
-import com.mycompany.HotelReservationApp.mainsystem.login.LoginFrame;
+import com.mycompany.HotelReservationApp.mainsystem.login.UpdatedLoginFrame;
+
 public class MainSystem {
     
     public static void main(String[] args) {
         
         SessionManager.init();
-        new LoginFrame().setVisible(true);
+        new UpdatedLoginFrame().setVisible(true);
     }
 }
