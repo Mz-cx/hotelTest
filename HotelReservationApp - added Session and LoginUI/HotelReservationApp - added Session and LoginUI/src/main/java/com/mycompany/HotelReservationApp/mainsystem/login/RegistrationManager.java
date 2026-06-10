@@ -4,7 +4,6 @@ import com.mycompany.HotelReservationApp.mainsystem.hotelreservation.util.Logger
 import com.mycompany.HotelReservationApp.mainsystem.model.User;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -31,11 +30,11 @@ public class RegistrationManager {
      * Initialize default users for testing/demonstration
      */
     private void initializeDefaultUsers() {
-        // Default admin user
+        // Default admin user - password: admin123
         User adminUser = new User(
             "ADMIN_001",
             "admin",
-            "hashedPassword123",  // In production, use proper password hashing
+            hashPassword("admin123"),  // Properly hashed password
             "Admin",
             "System",
             "Admin",
@@ -43,13 +42,14 @@ public class RegistrationManager {
             "555-0001"
         );
         adminUser.setRegistrationDate(LocalDateTime.now().format(DATE_FORMAT));
+        adminUser.setActive(true);
         registeredUsers.put("admin", adminUser);
         
-        // Default guest user
+        // Default guest user - password: guest123
         User guestUser = new User(
             "GUEST_001",
             "guest",
-            "guestPass123",
+            hashPassword("guest123"),  // Properly hashed password
             "Guest",
             "John",
             "Doe",
@@ -57,13 +57,14 @@ public class RegistrationManager {
             "555-0002"
         );
         guestUser.setRegistrationDate(LocalDateTime.now().format(DATE_FORMAT));
+        guestUser.setActive(true);
         registeredUsers.put("guest", guestUser);
         
-        // Default receptionist user
+        // Default receptionist user - password: receptionist123
         User receptionistUser = new User(
             "REC_001",
             "receptionist",
-            "recPass123",
+            hashPassword("receptionist123"),  // Properly hashed password
             "Receptionist",
             "Jane",
             "Smith",
@@ -71,6 +72,7 @@ public class RegistrationManager {
             "555-0003"
         );
         receptionistUser.setRegistrationDate(LocalDateTime.now().format(DATE_FORMAT));
+        receptionistUser.setActive(true);
         registeredUsers.put("receptionist", receptionistUser);
         
         Logger.getInstance().info("Default users initialized");
@@ -109,7 +111,7 @@ public class RegistrationManager {
         User newUser = new User(
             userID,
             username,
-            hashPassword(password),  // In production, use proper password hashing
+            hashPassword(password),  // Hash the password
             role,
             firstName,
             lastName,
