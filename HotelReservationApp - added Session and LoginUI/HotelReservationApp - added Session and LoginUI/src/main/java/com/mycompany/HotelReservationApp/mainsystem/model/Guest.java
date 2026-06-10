@@ -4,12 +4,11 @@ import com.mycompany.HotelReservationApp.mainsystem.hotelreservation.util.Logger
 import java.util.ArrayList;
 import java.util.List;
 
-public class Guest {
-    private String guestID;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phoneNumber;
+/**
+ * Guest class extends User with guest-specific properties
+ * Eliminates duplication from the base User class
+ */
+public class Guest extends User {
     private String identityType;
     private String identityNumber;
     private String address;
@@ -19,9 +18,9 @@ public class Guest {
     private String guestType; // Regular or VIP
     private List<String> reservationHistory;
     private double totalSpent;
-    private String registrationDate;
     
     public Guest() {
+        super();
         this.reservationHistory = new ArrayList<>();
         this.totalSpent = 0;
         this.guestType = "Regular";
@@ -29,29 +28,15 @@ public class Guest {
     
     public Guest(String guestID, String firstName, String lastName, String email, String phoneNumber) {
         this();
-        this.guestID = guestID;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.setUserID(guestID);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setEmail(email);
+        this.setPhoneNumber(phoneNumber);
+        this.setRole("Guest");
     }
     
-    // Getters and Setters
-    public String getGuestID() { return guestID; }
-    public void setGuestID(String guestID) { this.guestID = guestID; }
-    
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-    
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
-    
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-    
-    public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-    
+    // Guest-Specific Getters and Setters (NOT inherited from User)
     public String getIdentityType() { return identityType; }
     public void setIdentityType(String identityType) { this.identityType = identityType; }
     
@@ -76,19 +61,13 @@ public class Guest {
     public List<String> getReservationHistory() { return reservationHistory; }
     public void addReservation(String reservationID) {
         reservationHistory.add(reservationID);
-        Logger.getInstance().info("Reservation added to guest: " + guestID);
+        Logger.getInstance().info("Reservation added to guest: " + getUserID());
     }
     
     public double getTotalSpent() { return totalSpent; }
     public void setTotalSpent(double totalSpent) { this.totalSpent = totalSpent; }
     
-    public String getRegistrationDate() { return registrationDate; }
-    public void setRegistrationDate(String registrationDate) { this.registrationDate = registrationDate; }
-    
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-    
+    // Guest-Specific Methods
     public boolean isVIP() {
         return "VIP".equalsIgnoreCase(guestType);
     }
@@ -96,20 +75,20 @@ public class Guest {
     public void upgradeToVIP() {
         if (!isVIP()) {
             this.guestType = "VIP";
-            Logger.getInstance().info("Guest upgraded to VIP: " + guestID);
+            Logger.getInstance().info("Guest upgraded to VIP: " + getUserID());
         }
     }
     
     public void downgradeToRegular() {
         if (isVIP()) {
             this.guestType = "Regular";
-            Logger.getInstance().info("Guest downgraded to Regular: " + guestID);
+            Logger.getInstance().info("Guest downgraded to Regular: " + getUserID());
         }
     }
     
     @Override
     public String toString() {
-        return "Guest [ID=" + guestID + ", Name=" + getFullName() + 
-               ", Email=" + email + ", Type=" + guestType + "]";
+        return "Guest [ID=" + getUserID() + ", Name=" + getFullName() + 
+               ", Email=" + getEmail() + ", Type=" + guestType + "]";
     }
 }
